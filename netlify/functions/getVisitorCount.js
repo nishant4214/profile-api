@@ -1,14 +1,24 @@
-const fs = require('fs');
-const path = require('path');
+import { createClient } from '@supabase/supabase-js';
 
-exports.handler = async (event) => {
-  const filePath = path.join(__dirname, '../../visitorCount.json');
-  return new Promise((resolve, reject) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-      if (err) {
-        return resolve({ statusCode: 500, body: JSON.stringify({ error: 'Error reading file' }) });
-      }
-      resolve({ statusCode: 200, body: data });
-    });
-  });
+const supabaseUrl = 'https://fgglnzwavwqttvodqwcd.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnZ2xuendhdndxdHR2b2Rxd2NkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg5ODkyNjYsImV4cCI6MjA0NDU2NTI2Nn0.-XnzbPZ_jG5HI_tfflNchpA-84EWoQaKESxCh5yijLo';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+exports.handler = async () => {
+  const { data, error } = await supabase
+    .from('visitor_count')
+    .select('count')
+    .single();
+
+  if (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Error retrieving count' }),
+    };
+  }
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify(data),
+  };
 };
