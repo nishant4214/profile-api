@@ -10,12 +10,16 @@ exports.handler = async () => {
   const { data, error } = await supabase
     .from('visitor_count')
     .select('count')
+    .limit(1) // Ensure you only get one row
     .single();
 
+  console.log(data)
+
   if (error) {
+    console.log(error)
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Error retrieving count' }),
+      body: JSON.stringify({ error: error }),
     };
   }
 

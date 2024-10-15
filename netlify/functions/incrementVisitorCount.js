@@ -18,7 +18,6 @@ exports.handler = async () => {
   }
 
   const newCount = data.count + 1;
-
   const { error: updateError } = await supabase
     .from('visitor_count')
     .update({ count: newCount })
