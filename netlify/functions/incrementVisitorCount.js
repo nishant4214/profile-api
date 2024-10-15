@@ -6,16 +6,18 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 exports.handler = async () => {
   const { data, error } = await supabase
-    .from('visitor_count')
-    .select('count')
-    .single();
+  .from('visitor_count')
+  .select('count, id') // Include the id in the select
+  .single();
 
   if (error) {
+    console.error('Error retrieving count:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Error retrieving count' }),
     };
   }
+
 
   const newCount = data.count + 1;
   const { error: updateError } = await supabase
