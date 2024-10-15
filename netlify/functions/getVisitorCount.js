@@ -10,7 +10,6 @@ exports.handler = async () => {
   const { data, error } = await supabase
     .from('visitor_count')
     .select('count')
-    .limit(1) // Ensure you only get one row
     .single();
 
   console.log(data)
