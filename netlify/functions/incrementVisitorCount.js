@@ -34,6 +34,10 @@ exports.handler = async () => {
 
   return {
     statusCode: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*', // Change to your domain for production
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({ count: newCount }),
   };
 };
