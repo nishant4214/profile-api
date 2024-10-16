@@ -20,7 +20,7 @@ exports.handler = async (event) => {
     // Fetch comments for the given project ID
     const { data, error } = await supabase
       .from('comments')
-      .select('id, comment_text, created_at, users(username)') // Select necessary fields
+      .select('comment_id, comment_text, created_at, users(username)') // Select necessary fields
       .eq('project_id', projectId)
       .order('created_at', { ascending: true });
   
