@@ -6,16 +6,26 @@ const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 exports.handler = async (event) => {
-    console.log('Received event:', event); // Log the incoming event
+    console.log('Received event:', event);
+
+    // Handle preflight request for CORS
+    if (event.httpMethod === 'OPTIONS') {
+        return {
+            statusCode: 204, // No Content
+            headers: {
+                'Access-Control-Allow-Origin': '*', // Allow all origins for testing
+                'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allow specific methods
+                'Access-Control-Allow-Headers': 'Content-Type', // Allow specific headers
+            },
+        };
+    }
 
     // Ensure the request is a POST request
     if (event.httpMethod !== 'POST') {
         return {
             statusCode: 405, // Method Not Allowed
             headers: {
-                'Access-Control-Allow-Origin': '*', // Allow all origins for testing
-                'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allow POST and OPTIONS methods
-
+                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ error: 'Method not allowed' }),
@@ -57,7 +67,7 @@ exports.handler = async (event) => {
         };
     }
 
-    console.log('Comment added:', data); // Log the data being returned
+    console.log('Comment added:', data);
 
     return {
         statusCode: 201, // Created
@@ -67,7 +77,7 @@ exports.handler = async (event) => {
         },
         body: JSON.stringify({
             message: 'Comment added successfully',
-            comment: data, // Return the inserted comment
+            comment: data,
         }),
     };
 };
