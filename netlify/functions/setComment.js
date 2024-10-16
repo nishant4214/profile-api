@@ -77,7 +77,7 @@ exports.handler = async (event) => {
         },
         body: JSON.stringify({
             message: 'Comment added successfully',
-            comment: data,
+            comment: commentText,
         }),
     };
 };
