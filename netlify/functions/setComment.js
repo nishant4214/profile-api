@@ -69,7 +69,7 @@ exports.handler = async (event) => {
 
     console.log('Comment added:', data);
 
-  return {
+    return {
         statusCode: 201, // Created
         headers: {
             'Access-Control-Allow-Origin': '*', // Adjust for production
@@ -77,10 +77,7 @@ exports.handler = async (event) => {
         },
         body: JSON.stringify({
             message: 'Comment added successfully',
-            comment: {
-                ...data[0], // Assuming data is an array, use the first element
-                commentText: commentText, // Include the comment text
-            },
+            comment: data,
         }),
     };
 };
