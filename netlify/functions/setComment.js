@@ -14,6 +14,8 @@ exports.handler = async (event) => {
             statusCode: 405, // Method Not Allowed
             headers: {
                 'Access-Control-Allow-Origin': '*', // Allow all origins for testing
+                'Access-Control-Allow-Methods': 'POST, OPTIONS', // Allow POST and OPTIONS methods
+
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ error: 'Method not allowed' }),
