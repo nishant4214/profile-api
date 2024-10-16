@@ -69,7 +69,7 @@ exports.handler = async (event) => {
 
     console.log('Comment added:', data);
 
-    return {
+  return {
         statusCode: 201, // Created
         headers: {
             'Access-Control-Allow-Origin': '*', // Adjust for production
